@@ -91,9 +91,9 @@ public class ServiceImplementation {
 
             getAdsAllSQL = connection.prepareStatement("SELECT * FROM ads");
 
-            getAdsSQL = connection.prepareStatement("SELECT ads.adid, ads.isbn, ads.price, ads.rating, users.username, books.title, books.edition, books.author FROM ads INNER JOIN users ON ads.userid = users.userid INNER JOIN books ON ads.isbn = books.isbn WHERE deleted = 0 AND locked = 0");
+            getAdsSQL = connection.prepareStatement("SELECT ads.adid, ads.isbn, ads.price, ads.comment, ads.rating, users.username, books.title, books.edition, books.author FROM ads INNER JOIN users ON ads.userid = users.userid INNER JOIN books ON ads.isbn = books.isbn WHERE deleted = 0 AND locked = 0");
 
-            getMyAdsSQL = connection.prepareStatement("SELECT * FROM ads WHERE userid = ? AND deleted = 0");
+            getMyAdsSQL = connection.prepareStatement("SELECT ads.adid, ads.isbn, ads.price, ads.comment, ads.rating, users.username, books.title, books.edition, books.author FROM ads INNER JOIN users ON ads.userid = users.userid INNER JOIN books ON ads.isbn = books.isbn WHERE deleted = 0 AND locked = 0");
 
             getAdsUserSQL = connection.prepareStatement("SELECT ads.adid, ads.isbn, ads.price, ads.rating, books.title, books.edition, books.author FROM ads INNER JOIN users ON ads.userid = users.userid INNER JOIN books ON ads.isbn = books.isbn WHERE users.username = ? AND deleted = 0 AND locked = 0");
 
@@ -457,6 +457,7 @@ public class ServiceImplementation {
                 ad.setId(resultSet.getInt("adid"));
                 ad.setUserUsername(resultSet.getString("username"));
                 ad.setIsbn(resultSet.getLong("isbn"));
+                ad.setComment(resultSet.getString("comment"));
                 ad.setBookTitle(resultSet.getString("title"));
                 ad.setBookAuthor(resultSet.getString("author"));
                 ad.setBookEdition(resultSet.getString("edition"));
